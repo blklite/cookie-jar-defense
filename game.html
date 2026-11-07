@@ -159,7 +159,7 @@ button:focus-visible { outline: .12em solid var(--gum); outline-offset: .1em; }
     <div class="chips">
       <button class="chip" id="speed" aria-label="Game speed">1×</button>
       <button class="chip" id="menu">Pause</button>
-      <button class="chip" id="home" hidden>Week</button>
+      <button class="chip" id="home" hidden>Home</button>
     </div>
   </header>
 
@@ -182,8 +182,8 @@ button:focus-visible { outline: .12em solid var(--gum); outline-offset: .1em; }
 'use strict';
 // ---------- Config ----------
 const COLS = 9, ROWS = 12, CS = 120, W = COLS * CS, H = ROWS * CS;
-const KIOSK = location.protocol === 'file:';   // on the kitchen screen: Home button + idle return
-const HOME_URL = 'index.html', IDLE_MS = 180000, LAST_WAVE = 30;
+const FROM_DISK = location.protocol === 'file:';   // opened from disk: show a Home button to the intro page
+const HOME_URL = 'index.html', LAST_WAVE = 30;
 
 const TOWERS = {
   nerf:    { name: 'Monster', role: 'Nerf blaster', cost: 50, air: true, tag: 'Fast darts. Hits kites.',
@@ -541,25 +541,90 @@ function drawKid(g, type, x, y, ang, lvl, fireAge) {
     g.restore();
   };
   if (behind) item();
-  g.fillStyle = D.shirt; ell(g, x, y + 18, 26, 22); g.fill();
-  g.fillStyle = D.skin; circ(g, x, y - 8, 23); g.fill();
-  g.fillStyle = D.hair;
+  const px = Math.cos(ang) * 2.5, pyy = Math.sin(ang) * 2, INK = '#1b1530';
+  // white eyes with pupils that follow the aim
+  const eyes = (dx, ey, r, look) => {
+    for (const s of [-1, 1]) {
+      g.fillStyle = '#fff'; circ(g, x + s * dx, ey, r); g.fill();
+      g.fillStyle = INK; circ(g, x + s * dx + px * look, ey + pyy * look, r * .5); g.fill();
+    }
+  };
   if (type === 'nerf') {
-    g.beginPath(); g.arc(x, y - 12, 24, Math.PI, 0); g.fill();
-    g.beginPath(); g.ellipse(x + Math.cos(ang) * 14, y - 14 + Math.sin(ang) * 4, 16, 6, 0, 0, Math.PI * 2); g.fill();
+    // Monster: a round, fuzzy purple monster with stubby horns and a fanged grin
+    g.fillStyle = '#5b3fc4'; ell(g, x, y + 19, 26, 22); g.fill();
+    g.fillStyle = '#b9a6ff'; ell(g, x, y + 23, 14, 12); g.fill();
+    g.fillStyle = '#fff1c9';
+    for (const s of [-1, 1]) {
+      g.beginPath(); g.moveTo(x + s * 8, y - 24); g.quadraticCurveTo(x + s * 20, y - 34, x + s * 21, y - 46);
+      g.quadraticCurveTo(x + s * 13, y - 40, x + s * 2, y - 28); g.closePath(); g.fill();
+    }
+    g.fillStyle = '#7356ec';
+    for (let i = 0; i < 14; i++) { const a = i / 14 * Math.PI * 2; circ(g, x + Math.cos(a) * 21, y - 8 + Math.sin(a) * 20, 6.5); g.fill(); }
+    circ(g, x, y - 8, 22); g.fill();
+    g.fillStyle = '#8a70ff'; circ(g, x - 8, y - 20, 5); g.fill(); circ(g, x + 9, y - 22, 4); g.fill();
+    eyes(8, y - 12, 7, 1.2);
+    g.fillStyle = INK; g.beginPath(); g.arc(x, y - 1, 11, .2, Math.PI - .2); g.closePath(); g.fill();
+    g.fillStyle = '#ff6fa8'; ell(g, x, y + 7, 5, 2.5); g.fill();
+    g.fillStyle = '#fff';
+    for (const s of [-1, 1]) { g.beginPath(); g.moveTo(x + s * 7, y + 1); g.lineTo(x + s * 3, y + 1); g.lineTo(x + s * 5, y + 6); g.closePath(); g.fill(); }
   } else if (type === 'balloon') {
-    for (let i = 0; i < 7; i++) { circ(g, x - 18 + i * 6, y - 26 + Math.abs(i - 3) * 2.5, 8); g.fill(); }
+    // JoJo: a lumpy potato creature with stick-on ears, googly eyes and a big pink nose
+    g.fillStyle = '#e07a5f';
+    for (const s of [-1, 1]) { g.beginPath(); g.ellipse(x + s * 26, y - 6, 6, 9, s * .3, 0, Math.PI * 2); g.fill(); }
+    g.fillStyle = '#c99b62'; g.beginPath(); g.ellipse(x, y + 3, 25, 34, .1, 0, Math.PI * 2); g.fill();
+    g.strokeStyle = '#9c7442'; g.lineWidth = 2.5; g.stroke();
+    g.fillStyle = '#a87d4a';
+    for (const [dx, dy, r] of [[-15, 14, 2.5], [12, 22, 2], [-8, 26, 1.8], [16, -2, 1.8], [-18, -14, 1.5]]) { circ(g, x + dx, y + dy, r); g.fill(); }
+    g.strokeStyle = '#4e9a3a'; g.lineWidth = 3; g.beginPath(); g.moveTo(x + 2, y - 30); g.quadraticCurveTo(x + 5, y - 38, x + 3, y - 43); g.stroke();
+    g.fillStyle = '#6cc04a'; g.beginPath(); g.ellipse(x + 9, y - 42, 7, 3.5, -.5, 0, Math.PI * 2); g.fill();
+    g.beginPath(); g.ellipse(x - 3, y - 41, 5, 2.8, .6, 0, Math.PI * 2); g.fill();
+    for (const s of [-1, 1]) {
+      g.fillStyle = '#fff'; circ(g, x + s * 9, y - 12, 8); g.fill(); g.strokeStyle = INK; g.lineWidth = 1.5; g.stroke();
+      g.fillStyle = INK; circ(g, x + s * 9 + px * 1.6, y - 10 + pyy * 1.6, 4); g.fill();
+    }
+    g.fillStyle = '#ff7aa2'; circ(g, x, y - 1, 6.5); g.fill(); g.fillStyle = 'rgba(255,255,255,.6)'; circ(g, x - 2, y - 3, 2); g.fill();
+    g.strokeStyle = '#d62828'; g.lineWidth = 4; g.lineCap = 'round'; g.beginPath(); g.arc(x, y + 6, 9, .35, Math.PI - .35); g.stroke(); g.lineCap = 'butt';
+    g.fillStyle = '#ff8c1a'; ell(g, x - 10, y + 37, 8, 4); g.fill(); ell(g, x + 10, y + 37, 8, 4); g.fill();
   } else if (type === 'bubble') {
-    g.beginPath(); g.arc(x, y - 10, 24, Math.PI * 1.05, Math.PI * 1.95); g.fill();
-    circ(g, x - 26, y - 10, 9); g.fill(); circ(g, x + 26, y - 10, 9); g.fill();
-    g.fillStyle = '#ff6fa8'; circ(g, x - 22, y - 20, 6); g.fill(); circ(g, x + 22, y - 20, 6); g.fill();
+    // Little Miss: blonde ringlet curls, a polka-dot bow and a polka-dot dress
+    const curl = (cx, cy, r) => {
+      g.fillStyle = '#f2c14e'; circ(g, cx, cy, r); g.fill();
+      g.strokeStyle = '#d19a1f'; g.lineWidth = 1.8; g.beginPath(); g.arc(cx, cy, r * .55, .4, Math.PI * 1.7); g.stroke();
+    };
+    for (const s of [-1, 1]) for (let k = 0; k < 4; k++) curl(x + s * (21 + (k % 2) * 3), y - 16 + k * 8, 6.5);
+    g.fillStyle = '#e63946'; ell(g, x, y + 20, 26, 22); g.fill();
+    g.fillStyle = '#fff';
+    for (const [dx, dy] of [[-14, 18], [-4, 30], [8, 22], [17, 31], [-17, 32], [4, 38], [15, 13]]) { circ(g, x + dx, y + dy, 2.4); g.fill(); }
+    g.fillStyle = '#fff8e7'; ell(g, x - 6, y + 5, 7, 4, -.3); g.fill(); ell(g, x + 6, y + 5, 7, 4, .3); g.fill();
+    g.fillStyle = '#ffdbac'; circ(g, x, y - 8, 21); g.fill();
+    for (let i = 0; i < 6; i++) curl(x - 16 + i * 6.4, y - 26 + (i % 2) * 3, 7);
+    g.fillStyle = '#e63946';
+    for (const s of [-1, 1]) { g.beginPath(); g.moveTo(x + s * 3, y - 36); g.lineTo(x + s * 16, y - 44); g.lineTo(x + s * 15, y - 30); g.closePath(); g.fill(); }
+    circ(g, x, y - 37, 4.5); g.fill();
+    g.fillStyle = '#fff'; for (const [dx, dy] of [[-10, -38], [11, -38], [-13, -33], [13, -33]]) { circ(g, x + dx, y + dy, 1.6); g.fill(); }
+    g.fillStyle = 'rgba(255,105,140,.55)'; circ(g, x - 13, y - 2, 4.5); g.fill(); circ(g, x + 13, y - 2, 4.5); g.fill();
+    g.fillStyle = INK; circ(g, x - 7 + px, y - 9 + pyy, 3.4); g.fill(); circ(g, x + 7 + px, y - 9 + pyy, 3.4); g.fill();
+    g.fillStyle = '#c0392b'; g.beginPath(); g.arc(x, y + 1, 6.5, .1, Math.PI - .1); g.closePath(); g.fill();
+    g.fillStyle = INK; circ(g, x - 10, y + 2, 1.2); g.fill(); circ(g, x + 10, y + 2, 1.2); g.fill();
   } else {
-    g.beginPath(); for (let i = 0; i < 5; i++) { const sx = x - 20 + i * 10; g.moveTo(sx - 6, y - 22); g.lineTo(sx, y - 38 - (i % 2) * 5); g.lineTo(sx + 6, y - 22); } g.fill();
-    g.beginPath(); g.arc(x, y - 12, 22, Math.PI * 1.1, Math.PI * 1.9); g.fill();
+    // Frankenstein: a sad teenage monster in a hoodie, with stitches, neck bolts and earbuds
+    g.fillStyle = '#3d414c'; g.beginPath(); g.roundRect(x - 27, y - 34, 54, 54, 22); g.fill();
+    g.fillStyle = '#4a4f5c'; ell(g, x, y + 20, 27, 22); g.fill();
+    g.strokeStyle = '#fff8e7'; g.lineWidth = 2; g.beginPath(); g.moveTo(x - 5, y + 8); g.lineTo(x - 6, y + 22); g.moveTo(x + 5, y + 8); g.lineTo(x + 6, y + 22); g.stroke();
+    g.fillStyle = '#9aa0a6'; g.fillRect(x - 25, y + 2, 7, 6); g.fillRect(x + 18, y + 2, 7, 6);
+    g.fillStyle = '#8fbf6a'; g.beginPath(); g.roundRect(x - 19, y - 30, 38, 42, 9); g.fill();
+    g.fillStyle = '#1b1b22'; g.fillRect(x - 20, y - 32, 40, 9);
+    g.beginPath(); for (let i = 0; i < 6; i++) { const sx = x - 20 + i * 8; g.moveTo(sx, y - 23); g.lineTo(sx + 4, y - 17); g.lineTo(sx + 8, y - 23); } g.fill();
+    g.strokeStyle = '#3e5a2c'; g.lineWidth = 1.6; g.beginPath(); g.moveTo(x - 12, y - 13); g.lineTo(x + 6, y - 15);
+    for (let i = 0; i < 4; i++) { const sx = x - 10 + i * 5; g.moveTo(sx, y - 17); g.lineTo(sx + .5, y - 11); } g.stroke();
+    g.strokeStyle = INK; g.lineWidth = 2.2; g.beginPath(); g.moveTo(x - 4, y - 9); g.lineTo(x - 13, y - 6); g.moveTo(x + 4, y - 9); g.lineTo(x + 13, y - 6); g.stroke();
+    g.fillStyle = INK; circ(g, x - 8 + px, y - 2 + pyy, 3); g.fill(); circ(g, x + 8 + px, y - 2 + pyy, 3); g.fill();
+    g.fillStyle = '#8fbf6a'; g.fillRect(x - 12, y - 6, 8, 3); g.fillRect(x + 4, y - 6, 8, 3);
+    g.fillStyle = 'rgba(120,200,255,.85)'; g.beginPath(); g.ellipse(x + 12, y + 4, 2, 3.2, 0, 0, Math.PI * 2); g.fill();
+    g.strokeStyle = INK; g.lineWidth = 2.4; g.beginPath(); g.arc(x, y + 12, 6, Math.PI + .5, Math.PI * 2 - .5); g.stroke();
+    g.fillStyle = '#f2f2f2'; circ(g, x - 19, y - 4, 2.6); g.fill(); circ(g, x + 19, y - 4, 2.6); g.fill();
+    g.strokeStyle = '#f2f2f2'; g.lineWidth = 1.4; g.beginPath(); g.moveTo(x - 19, y - 2); g.quadraticCurveTo(x - 16, y + 12, x - 3, y + 18); g.moveTo(x + 19, y - 2); g.quadraticCurveTo(x + 16, y + 12, x + 3, y + 18); g.stroke();
   }
-  const px = Math.cos(ang) * 2.5, pyy = Math.sin(ang) * 2;
-  g.fillStyle = '#1b1530'; circ(g, x - 8 + px, y - 8 + pyy, 3.6); g.fill(); circ(g, x + 8 + px, y - 8 + pyy, 3.6); g.fill();
-  g.strokeStyle = '#1b1530'; g.lineWidth = 2.5; g.beginPath(); g.arc(x + px, y + 1, 8, .3, Math.PI - .3); g.stroke();
   if (!behind) item();
 }
 
@@ -801,7 +866,7 @@ function infoHTML(tw) {
 }
 
 function overlayHTML() {
-  const homeBtn = KIOSK ? `<button class="btn ghost" data-act="home">Back to the week</button>` : '';
+  const homeBtn = FROM_DISK ? `<button class="btn ghost" data-act="home">Home</button>` : '';
   if (G.screen === 'title') {
     const b = best();
     return `<h1>Cookie Jar <em>Defense</em></h1>
@@ -812,7 +877,7 @@ function overlayHTML() {
         <li><span><b>Hold out for 30 waves.</b> Every ninja that reaches the porch eats cookies. Lose all 20 and the raid wins.</span></li>
       </ul>
       <div class="row"><button class="btn" data-act="play">Play</button>${homeBtn}</div>
-      ${b ? `<p class="small">Best today: ${b} waves</p>` : ''}`;
+      ${b ? `<p class="small">Your best: ${b} waves</p>` : ''}`;
   }
   if (G.screen === 'pause') {
     return `<h2>Paused</h2><p>The ninjas are frozen mid-tiptoe.</p>
@@ -883,7 +948,7 @@ function tapCell(c, r) {
     G.coins -= D.cost;
     G.towers.push({ id: G.nid++, type: G.build, c, r, lvl: 1, cd: 0, angle: -Math.PI / 2, mode: 'first', spent: D.cost, fireT: -9 });
     const [x, y] = c2p(c, r); fx('place', x, y);
-    if (G.coins < D.cost) G.build = null;
+    G.build = null;   // one tap buys one kid; pick the card again to buy another
     return;
   }
   G.sel = null;
@@ -930,16 +995,13 @@ $('ov').addEventListener('click', ev => {
 document.addEventListener('contextmenu', ev => ev.preventDefault());
 
 function goHome() { location.href = HOME_URL; }
-if (KIOSK) {
+if (FROM_DISK) {
   $('home').hidden = false;
-  let lastTouch = Date.now();
-  document.addEventListener('pointerdown', () => { lastTouch = Date.now(); }, true);
-  setInterval(() => { if (Date.now() - lastTouch > IDLE_MS) goHome(); }, 5000);
 }
 
 // ---------- Sizing and loop ----------
 function resize() {
-  const gut = KIOSK ? 0 : 32, vpad = KIOSK ? 0 : 8;
+  const gut = FROM_DISK ? 0 : 32, vpad = FROM_DISK ? 0 : 8;
   const u = Math.max(.2, Math.min((innerWidth - gut) / 1080, (innerHeight - vpad) / 1920));
   document.documentElement.style.setProperty('--u', u);
   const dpr = Math.min(2, devicePixelRatio || 1), bw = Math.round(W * u * dpr), bh = Math.round(H * u * dpr);

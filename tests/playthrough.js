@@ -61,7 +61,8 @@ function serve() {
       } else if (placed.length && (next >= PLAN.length || c >= 250)) {
         await tap(...placed[up++ % placed.length]);
         const btn = page.locator('[data-act=up]');
-        if (await btn.count() && await btn.isEnabled()) await btn.click({ force: true });
+        // the panel can close between the check and the click; a missed upgrade is not a failure
+        if (await btn.count() && await btn.isVisible() && await btn.isEnabled()) await btn.click({ force: true, timeout: 2000 }).catch(() => {});
         await page.locator('.ihead [data-act=close]').click({ force: true }).catch(() => {});
         if (guard > 6) break;
       } else break;

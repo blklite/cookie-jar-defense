@@ -87,7 +87,7 @@ section { padding-block: 3rem; border-top: 2px solid var(--panel-2); display: gr
 .shots img { width: 100%; height: auto; border-radius: 16px; box-shadow: 0 0 0 2px var(--line); }
 .shots figcaption { font-size: .92rem; color: var(--muted); line-height: 1.4; }
 
-/* Kiosk fit and next steps */
+/* Chore reward cards */
 .checks, .todo { list-style: none; margin: 0; padding: 0; display: grid; gap: .55rem; }
 .checks li, .todo li { display: grid; grid-template-columns: 1.6rem minmax(0, 1fr); gap: .5rem; align-items: start; }
 .checks li::before { content: ""; width: .95rem; height: .55rem; margin-top: .42rem; border-left: 3px solid var(--sun); border-bottom: 3px solid var(--sun); transform: rotate(-45deg); }
@@ -116,10 +116,10 @@ footer { padding-top: 2rem; border-top: 2px solid var(--panel-2); color: var(--m
 <div class="wrap">
   <header class="hero">
     <div>
-      <p class="eyebrow">Kitchen screen · game prototype · October 2026</p>
+      <p class="eyebrow">Chore reward · game prototype · October 2026</p>
       <h1>Cookie Jar <em>Defense</em></h1>
-      <p class="lede">A tower defense game for the kitchen touchscreen. A gang of very silly ninjas sneaks across the backyard to raid the cookie jar, and Monster, JoJo, Little Miss and Frankenstein have to stop them.</p>
-      <p class="muted">The kitchen screen shows the family week. This adds something to tap while the pasta boils. It goes back to the week by itself when nobody is playing.</p>
+      <p class="lede">A small tower defense game that kids earn by finishing their chores. A gang of very silly ninjas sneaks across the backyard to raid the cookie jar, and Monster, JoJo, Little Miss and Frankenstein have to stop them.</p>
+      <p class="muted">Finish the chores, earn a few rounds. It works by touch or with a mouse, and there is nothing to install.</p>
       <div class="actions">
         <a class="btn" href="#play">Play the prototype</a>
         <a href="game.html">Open the game on its own page</a>
@@ -143,10 +143,10 @@ footer { padding-top: 2rem; border-top: 2px solid var(--panel-2); color: var(--m
     <p class="muted">Each kid has their own job and 3 levels. Only Monster and Frankenstein can reach the kites.</p>
     <div class="lawn">
       <ul class="roster kids">
-        <li class="who"><img src="img/kid-nerf.png" width="209" height="216" alt="Monster: orange cap, blue shirt, foam blaster."><div><h3>Monster</h3><p>Nerf blaster. Fast foam darts, cheap and reliable.</p><div class="meta"><span class="pill sun">50 coins</span><span class="pill sky">Hits kites</span></div></div></li>
-        <li class="who"><img src="img/kid-balloon.png" width="209" height="216" alt="JoJo: curly hair, red shirt, water balloon."><div><h3>JoJo</h3><p>Water balloons. Each one soaks a whole group.</p><div class="meta"><span class="pill sun">80 coins</span><span class="pill">Splash</span></div></div></li>
-        <li class="who"><img src="img/kid-bubble.png" width="209" height="216" alt="Little Miss: pigtails with pink bows, purple shirt, bubble wand."><div><h3>Little Miss</h3><p>Bubble wand. Slows ninjas down, up to 3 at once at level 3.</p><div class="meta"><span class="pill sun">70 coins</span><span class="pill">Slows</span></div></div></li>
-        <li class="who"><img src="img/kid-chicken.png" width="209" height="216" alt="Frankenstein: spiky blond hair, green shirt, rubber chicken."><div><h3>Frankenstein</h3><p>Rubber chicken. Throws it across the yard, and the bonk stuns.</p><div class="meta"><span class="pill sun">140 coins</span><span class="pill sky">Hits kites</span><span class="pill">Long range</span></div></div></li>
+        <li class="who"><img src="img/kid-nerf.png" width="209" height="216" alt="Monster: a round, fuzzy purple monster with stubby horns, a fanged grin and a foam blaster."><div><h3>Monster</h3><p>Nerf blaster. Fast foam darts, cheap and reliable.</p><div class="meta"><span class="pill sun">50 coins</span><span class="pill sky">Hits kites</span></div></div></li>
+        <li class="who"><img src="img/kid-balloon.png" width="209" height="216" alt="JoJo: a potato creature with googly eyes, stick-on ears, a pink nose, a sprout on top and a water balloon."><div><h3>JoJo</h3><p>Water balloons. Each one soaks a whole group.</p><div class="meta"><span class="pill sun">80 coins</span><span class="pill">Splash</span></div></div></li>
+        <li class="who"><img src="img/kid-bubble.png" width="209" height="216" alt="Little Miss: blonde ringlet curls, a red polka-dot bow and dress, rosy cheeks and a bubble wand."><div><h3>Little Miss</h3><p>Bubble wand. Slows ninjas down, up to 3 at once at level 3.</p><div class="meta"><span class="pill sun">70 coins</span><span class="pill">Slows</span></div></div></li>
+        <li class="who"><img src="img/kid-chicken.png" width="209" height="216" alt="Frankenstein: a sad teenage monster in a hoodie, with green skin, stitches, neck bolts, earbuds and a rubber chicken."><div><h3>Frankenstein</h3><p>Rubber chicken. Throws it across the yard, and the bonk stuns.</p><div class="meta"><span class="pill sun">140 coins</span><span class="pill sky">Hits kites</span><span class="pill">Long range</span></div></div></li>
       </ul>
     </div>
   </section>
@@ -170,7 +170,7 @@ footer { padding-top: 2rem; border-top: 2px solid var(--panel-2); color: var(--m
     <div class="play">
       <div class="notes">
         <h2 id="play-h">Play it here</h2>
-        <p>This is the same file that would run on the kitchen screen, which is a portrait 1080 × 1920 touchscreen. It works with a mouse too, and a mouse also shows each kid's range before you place them.</p>
+        <p>It is laid out for a tall portrait screen and plays by touch. It works with a mouse too, and a mouse also shows each kid's range before you place them.</p>
         <p class="muted">The <b>1×</b> button switches to double speed. <b>Pause</b> has Restart. Your best wave is kept in this browser only.</p>
         <p><a href="game.html">Open the game on its own page</a> if the frame is too small.</p>
       </div>
@@ -188,15 +188,14 @@ footer { padding-top: 2rem; border-top: 2px solid var(--panel-2); color: var(--m
   </section>
 
   <section aria-labelledby="fit">
-    <h2 id="fit">Built for the kitchen screen</h2>
+    <h2 id="fit">Made as a chore reward</h2>
     <div class="two">
       <div class="card">
-        <h3>Fits the kiosk's rules</h3>
+        <h3>Why it fits</h3>
         <ul class="checks">
-          <li><span>One self-contained file (54 KB) with one inline script and no image files. The only outside request is the display font, and without it the game falls back to Atkinson Hyperlegible.</span></li>
-          <li><span>Laid out for 1080 × 1920 portrait. Everything works by tap, with no hover and no keyboard.</span></li>
-          <li><span>On the kiosk it shows a <b>Week</b> button. After 3 minutes with no touch, it goes back to the week on its own.</span></li>
-          <li><span>Kept separate from the week page, so that page's size limits and tests don't change.</span></li>
+          <li><span>A reward, not a time sink: a few waves take a few minutes, and the game is easy to stop between waves.</span></li>
+          <li><span>One self-contained file (about 60 KB) with no image files and nothing to install.</span></li>
+          <li><span>Plays by tap on a phone or tablet, and with a mouse on a computer.</span></li>
           <li><span>The ninjas are slapstick, not violent. Nobody gets hurt.</span></li>
         </ul>
       </div>
@@ -209,30 +208,8 @@ footer { padding-top: 2rem; border-top: 2px solid var(--panel-2); color: var(--m
     </div>
   </section>
 
-  <section aria-labelledby="next">
-    <h2 id="next">What it takes to ship</h2>
-    <div class="two">
-      <ul class="todo">
-        <li><span>Write it up as a spec in the wiki, with an ADO item next to K1–K6, so the open questions get rulings.</span></li>
-        <li><span>Add a small game tile to the week page. It needs a link, not more script, so <code>kiosk.js</code> stays under its 3 KB limit.</span></li>
-        <li><span>Have the morning build write <code>game.html</code> next to <code>index.html</code>, and have the Pi pull both files.</span></li>
-        <li><span>Make the reload watcher cover the whole folder, not only <code>index.html</code>.</span></li>
-        <li><span>Pin the Lilita One font the same way as Atkinson Hyperlegible, or fall back to Atkinson for headings.</span></li>
-        <li><span>Add a browser test: a tap at 1080 × 1920 places a kid, and 3 minutes without a touch goes back to the week.</span></li>
-      </ul>
-      <div class="card">
-        <h3>Open questions</h3>
-        <ul class="qs">
-          <li><b>When can it be played?</b><span>Proposed: any time the screen is on. A school-morning lockout is easy to add.</span></li>
-          <li><b>How long before it goes back to the week?</b><span>Proposed: 3 minutes with no touch, even mid-wave.</span></li>
-          <li><b>Should high scores last?</b><span>Proposed: no. The browser resets each morning, so "best wave" is for today only. Keeping it would need a way to save scores on the house server.</span></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
   <footer>
-    <p>Cookie Jar Defense is a prototype for the household kitchen screen. Its code isn't in the kiosk repository yet.</p>
+    <p>Cookie Jar Defense is a prototype: a small game for kids to play after they finish their chores.</p>
   </footer>
 </div>
 </body>
