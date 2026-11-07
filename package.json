@@ -1,0 +1,12 @@
+{
+  "name": "cookie-jar-defense",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A tower defense game for the kitchen touchscreen: the kids defend the cookie jar from comical ninjas.",
+  "scripts": {
+    "test": "node tests/playthrough.js"
+  },
+  "devDependencies": {
+    "playwright-core": "1.56.1"
+  }
+}
