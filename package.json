@@ -2,7 +2,7 @@
   "name": "cookie-jar-defense",
   "version": "0.1.0",
   "private": true,
-  "description": "A tower defense game for the kitchen touchscreen: the kids defend the cookie jar from comical ninjas.",
+  "description": "A tower defense game that kids earn by finishing their chores: four kids defend the cookie jar from comical ninjas.",
   "scripts": {
     "test": "node tests/playthrough.js"
   },
